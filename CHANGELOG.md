@@ -1,3 +1,7 @@
+## 2.5.0
+
+- upgraded native android sdk version from 1.0.2 to 1.2.1
+
 ## 2.4.0
 
 - added namespace in build.gadle
