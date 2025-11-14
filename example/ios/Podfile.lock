@@ -1,26 +1,23 @@
 PODS:
-  - Flutter (1.0.0)
-  - permission_handler_apple (9.0.4):
+  - app_links (0.0.1):
     - Flutter
+  - Flutter (1.0.0)
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - suprsend_flutter_sdk (2.3.0):
+  - suprsend_flutter_sdk (2.5.0):
     - Flutter
     - SuprsendCore (= 1.0.7)
     - SuprSendSdk (= 1.0.4)
   - SuprsendCore (1.0.7)
   - SuprSendSdk (1.0.4)
-  - uni_links (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
+  - app_links (from `.symlinks/plugins/app_links/ios`)
   - Flutter (from `Flutter`)
-  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - suprsend_flutter_sdk (from `.symlinks/plugins/suprsend_flutter_sdk/ios`)
   - SuprsendCore
   - SuprSendSdk
-  - uni_links (from `.symlinks/plugins/uni_links/ios`)
 
 SPEC REPOS:
   trunk:
@@ -28,26 +25,23 @@ SPEC REPOS:
     - SuprSendSdk
 
 EXTERNAL SOURCES:
+  app_links:
+    :path: ".symlinks/plugins/app_links/ios"
   Flutter:
     :path: Flutter
-  permission_handler_apple:
-    :path: ".symlinks/plugins/permission_handler_apple/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   suprsend_flutter_sdk:
     :path: ".symlinks/plugins/suprsend_flutter_sdk/ios"
-  uni_links:
-    :path: ".symlinks/plugins/uni_links/ios"
 
 SPEC CHECKSUMS:
+  app_links: e70ca16b4b0f88253b3b3660200d4a10b4ea9795
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  suprsend_flutter_sdk: e4a90f7f00e3cf48c83eb6ae969ad262e404818f
+  suprsend_flutter_sdk: d8eb3572783b76a90c9b56c0976c0cbad998686d
   SuprsendCore: 2c175040c13adaaa9f06ac93967c4c8c6a96463a
   SuprSendSdk: 7121a72b853117bcbe23402c87eb0b4afd70dc13
-  uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
 
 PODFILE CHECKSUM: a2b311bc8033d5f618a0e1436852a5327521826e
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.16.2

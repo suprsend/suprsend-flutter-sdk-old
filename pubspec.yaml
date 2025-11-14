@@ -4,12 +4,13 @@ version: 2.5.0
 homepage: "https://www.suprsend.com/"
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=2.5.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  go_router: ^14.6.2
 
 dev_dependencies:
   flutter_test:

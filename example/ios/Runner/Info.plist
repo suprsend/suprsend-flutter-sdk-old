@@ -51,5 +51,18 @@
 	<false/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>suprsend</string>
+    </array>
+    <key>CFBundleURLName</key>
+    <string>suprsend</string>
+  </dict>
+</array>
+<key>FlutterDeepLinkingEnabled</key>
+<true/>
 </dict>
 </plist>

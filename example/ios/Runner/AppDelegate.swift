@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import SuprSendSdk // Add this
+import UserNotifications
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -11,10 +12,11 @@ import SuprSendSdk // Add this
         GeneratedPluginRegistrant.register(with: self)
         
         //  suprsend initialization code
-        let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your workspace_key>", secret:"your workspace_secret")
+        let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your workspace_key>", secret:"<your workspace_secret>")
         SuprSend.shared.configureWith(configuration: suprSendConfiguration  , launchOptions: launchOptions)
         SuprSend.shared.enableLogging()
         var options: UNAuthorizationOptions = [.badge, .alert, .sound]
+        UNUserNotificationCenter.current().delegate = self
         SuprSend.shared.registerForPushNotifications(options: options)
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -53,5 +55,23 @@ import SuprSendSdk // Add this
         } else {
             completionHandler([.alert, .badge, .sound])
         }
+    }
+    
+//    override func application(_ app: UIApplication, open url: URL,
+//                         options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//        print("deeplink url", url)
+//            return true
+//        }
+}
+
+
+extension AppDelegate: SuprSendDeepLinkDelegate {
+    func shouldHandleSuprSendDeepLink(_ url: URL) -> Bool {
+        print("executing the deeplink delegate", url);
+//        if url.absoluteString == "https://example.com/product/123" {
+//            // Do Something
+//            return false
+//        }
+        return true
     }
 }
