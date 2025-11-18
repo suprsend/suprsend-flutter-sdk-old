@@ -66,76 +66,27 @@ Future<void> _initAppLinks() async {
 /// Handle app link and navigate accordingly
 void _handleAppLink(Uri uri) {
   debugPrint('Received deeplink: $uri');
+  debugPrint('Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}');
 
   // Check if this is a suprsend deeplink
-  if (uri.scheme == 'com.suprsend') {
-    // For custom schemes like com.suprsend://details, the path might be in host or path
-    // Extract path from the URI - check both path and host
-    String? routePath;
+  final isSuprsendLink =
+      (uri.scheme == 'com.suprsend' && uri.host == 'details') ||
+          (uri.scheme == 'https' &&
+              uri.host == 'web-inbox-assets.suprsend.com' &&
+              uri.path == '/details');
 
-    // First check if path is available
-    if (uri.path.isNotEmpty && uri.path != '/') {
-      routePath = uri.path.startsWith('/') ? uri.path : '/${uri.path}';
-    }
-    // If path is empty, check host (for URLs like com.suprsend://details)
-    else if (uri.host.isNotEmpty) {
-      routePath = '/${uri.host}';
-    }
-    // If host has path segments, use them
-    else if (uri.pathSegments.isNotEmpty) {
-      routePath = '/${uri.pathSegments.join('/')}';
-    }
+  if (!isSuprsendLink) {
+    debugPrint('Not a suprsend deeplink, ignoring');
+    return;
+  }
 
-    final queryParams = uri.queryParameters;
-
-    debugPrint(
-        'Suprsend deeplink - path: ${uri.path}, host: ${uri.host}, routePath: $routePath, queryParams: $queryParams');
-
-    // Handle the details route
-    if (routePath == '/details' || routePath?.startsWith('/details') == true) {
+  // Use SchedulerBinding to ensure navigation happens after the frame is built
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.delayed(const Duration(milliseconds: 100), () {
       _router.go('/details');
       debugPrint('Navigated to /details');
-    } else if (routePath == null || routePath.isEmpty || routePath == '/') {
-      // If no path, go to home
-      _router.go('/');
-      debugPrint('Navigated to /');
-    } else {
-      // For unknown routes, go to home
-      _router.go('/');
-      debugPrint('Unknown route: $routePath, navigated to /');
-    }
-
-    // Handle query parameters if needed
-    if (queryParams.isNotEmpty) {
-      debugPrint('Query parameters: $queryParams');
-    }
-  } else {
-    // Handle other deeplink schemes
-    final path = uri.path;
-    final queryParams = uri.queryParameters;
-
-    // Navigate based on the path
-    if (path.isNotEmpty && path != '/') {
-      // Remove leading slash if present
-      final routePath = path.startsWith('/') ? path : '/$path';
-
-      // Check if the route exists in our router
-      if (routePath == '/details' || routePath.startsWith('/details')) {
-        _router.go('/details');
-      } else {
-        // For unknown routes, go to home
-        _router.go('/');
-      }
-    } else {
-      // If no path, go to home
-      _router.go('/');
-    }
-
-    // Handle query parameters if needed
-    if (queryParams.isNotEmpty) {
-      debugPrint('Query parameters: $queryParams');
-    }
-  }
+    });
+  });
 }
 
 /// The main app.
