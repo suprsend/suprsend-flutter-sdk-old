@@ -2,6 +2,7 @@ import UIKit
 import Flutter
 import SuprSendSdk // Add this
 import UserNotifications
+import app_links
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,10 +11,19 @@ import UserNotifications
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
-        
+
+//    // Retrieve the link from parameters
+//    if let url = AppLinks.shared.getLink(launchOptions: launchOptions) {
+//      // We have a link, propagate it to your Flutter app or not
+//        print("app delegate link", url)
+//      AppLinks.shared.handleLink(url: url)
+//      return true // Returning true will stop the propagation to other packages
+//    }
+
         //  suprsend initialization code
-        let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your workspace_key>", secret:"<your workspace_secret>")
+        let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your_ws_key>", secret:"<your_ws_secret>")
         SuprSend.shared.configureWith(configuration: suprSendConfiguration  , launchOptions: launchOptions)
+        SuprSend.shared.setDeepLinkDelegate(self)
         SuprSend.shared.enableLogging()
         var options: UNAuthorizationOptions = [.badge, .alert, .sound]
         UNUserNotificationCenter.current().delegate = self
@@ -67,11 +77,10 @@ import UserNotifications
 
 extension AppDelegate: SuprSendDeepLinkDelegate {
     func shouldHandleSuprSendDeepLink(_ url: URL) -> Bool {
-        print("executing the deeplink delegate", url);
-//        if url.absoluteString == "https://example.com/product/123" {
-//            // Do Something
-//            return false
-//        }
+        if url.absoluteString == "https://example.com/product/123" {
+            // write your logic here
+            return false
+        }
         return true
     }
 }

@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:suprsend.com</string>
+		<string>applinks:web-inbox-assets.suprsend.com?mode=developer</string>
 	</array>
 </dict>
 </plist>
