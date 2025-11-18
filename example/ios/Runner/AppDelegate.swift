@@ -14,6 +14,7 @@ import UserNotifications
         //  suprsend initialization code
         let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your workspace_key>", secret:"<your workspace_secret>")
         SuprSend.shared.configureWith(configuration: suprSendConfiguration  , launchOptions: launchOptions)
+        SuprSend.shared.setDeepLinkDelegate(self)
         SuprSend.shared.enableLogging()
         var options: UNAuthorizationOptions = [.badge, .alert, .sound]
         UNUserNotificationCenter.current().delegate = self

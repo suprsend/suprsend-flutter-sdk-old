@@ -1015,32 +1015,27 @@ Future<void> _initAppLinks() async {
 /// Handle app link and navigate accordingly
 void _handleAppLink(Uri uri) {
   debugPrint('Received deeplink: $uri');
+  debugPrint('Scheme: ${uri.scheme}, Host: ${uri.host}, Path: ${uri.path}');
 
-  // Extract path from the URI
-  final path = uri.path;
-  final queryParams = uri.queryParameters;
+  // Check if this is a suprsend deeplink
+  final isSuprsendLink =
+      (uri.scheme == 'com.suprsend' && uri.host == 'details') ||
+          (uri.scheme == 'https' &&
+              uri.host == 'web-inbox-assets.suprsend.com' &&
+              uri.path == '/details');
 
-  // Navigate based on the path
-  if (path.isNotEmpty && path != '/') {
-    // Remove leading slash if present
-    final routePath = path.startsWith('/') ? path : '/$path';
+  if (!isSuprsendLink) {
+    debugPrint('Not a suprsend deeplink, ignoring');
+    return;
+  }
 
-    // Check if the route exists in our router
-    if (routePath == '/details' || routePath.startsWith('/details')) {
+  // Use SchedulerBinding to ensure navigation happens after the frame is built
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Future.delayed(const Duration(milliseconds: 100), () {
       _router.go('/details');
-    } else {
-      // For unknown routes, go to home
-      _router.go('/');
-    }
-  } else {
-    // If no path, go to home
-    _router.go('/');
-  }
-
-  // Handle query parameters if needed
-  if (queryParams.isNotEmpty) {
-    debugPrint('Query parameters: $queryParams');
-  }
+      debugPrint('Navigated to /details');
+    });
+  });
 }
 
 /// The main app.
