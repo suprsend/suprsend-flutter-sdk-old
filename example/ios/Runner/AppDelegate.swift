@@ -77,10 +77,14 @@ import app_links
 
 extension AppDelegate: SuprSendDeepLinkDelegate {
     func shouldHandleSuprSendDeepLink(_ url: URL) -> Bool {
-        if url.absoluteString == "https://example.com/product/123" {
-            // write your logic here
+        print("executing the deeplink delegate", url);
+        
+        if url.absoluteString.hasPrefix("https://web-inbox-assets.suprsend.com/") {
+            let deeplink = url.absoluteString.replacingOccurrences(of: "https://web-inbox-assets.suprsend.com/", with: "com.suprsend://")
+            UIApplication.shared.open(URL(string: deeplink)!)
             return false
         }
+        
         return true
     }
 }
