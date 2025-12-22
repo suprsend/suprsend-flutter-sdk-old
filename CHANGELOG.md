@@ -1,3 +1,7 @@
+## 2.5.1
+
+- upgraded native android sdk version from 1.2.1 to 1.2.7
+
 ## 2.5.0
 
 - upgraded native android sdk version from 1.0.2 to 1.2.1
