@@ -1,8 +1,8 @@
 /**
  * To update the library's version code & version name, change these
  * */
-def pluginVersionCode = 14
-def pluginVersionName = "2.5.0"
+def pluginVersionCode = 15
+def pluginVersionName = "2.5.1"
 
 group 'com.suprsend.suprsend_flutter_sdk'
 version pluginVersionName
@@ -69,5 +69,5 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api "com.suprsend:flutter:1.2.1"
+     api "com.suprsend:flutter:1.2.7"
 }
