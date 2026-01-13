@@ -4,5 +4,10 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:web-inbox-assets.suprsend.com?mode=developer</string>
+		<string>applinks:www.web-inbox-assets.suprsend.com?mode=developer</string>
+	</array>
 </dict>
 </plist>

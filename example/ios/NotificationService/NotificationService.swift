@@ -11,8 +11,8 @@ var modifiedNotificationContent: UNMutableNotificationContent?
 private func track(request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         
         let suprSendConfiguration = SuprSendSDKConfiguration(
-            withKey: "your workspace key",
-            secret: "your workspace secret"
+            withKey: "<your_ws_key>",
+            secret: "<your_ws_secret>"
         )
         
         SuprSend.shared.configureWith(configuration: suprSendConfiguration , launchOptions: [:])

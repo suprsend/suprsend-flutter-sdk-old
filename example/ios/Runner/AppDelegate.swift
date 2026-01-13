@@ -1,6 +1,8 @@
 import UIKit
 import Flutter
 import SuprSendSdk // Add this
+import UserNotifications
+import app_links
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -9,12 +11,22 @@ import SuprSendSdk // Add this
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
-        
+
+//    // Retrieve the link from parameters
+//    if let url = AppLinks.shared.getLink(launchOptions: launchOptions) {
+//      // We have a link, propagate it to your Flutter app or not
+//        print("app delegate link", url)
+//      AppLinks.shared.handleLink(url: url)
+//      return true // Returning true will stop the propagation to other packages
+//    }
+
         //  suprsend initialization code
-        let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your workspace_key>", secret:"your workspace_secret")
+        let suprSendConfiguration = SuprSendSDKConfiguration(withKey: "<your_ws_key>", secret:"<your_ws_secret>")
         SuprSend.shared.configureWith(configuration: suprSendConfiguration  , launchOptions: launchOptions)
+        SuprSend.shared.setDeepLinkDelegate(self)
         SuprSend.shared.enableLogging()
         var options: UNAuthorizationOptions = [.badge, .alert, .sound]
+        UNUserNotificationCenter.current().delegate = self
         SuprSend.shared.registerForPushNotifications(options: options)
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -53,5 +65,26 @@ import SuprSendSdk // Add this
         } else {
             completionHandler([.alert, .badge, .sound])
         }
+    }
+    
+//    override func application(_ app: UIApplication, open url: URL,
+//                         options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//        print("deeplink url", url)
+//            return true
+//        }
+}
+
+
+extension AppDelegate: SuprSendDeepLinkDelegate {
+    func shouldHandleSuprSendDeepLink(_ url: URL) -> Bool {
+        print("executing the deeplink delegate", url);
+        
+        if url.absoluteString.hasPrefix("https://web-inbox-assets.suprsend.com/") {
+            let deeplink = url.absoluteString.replacingOccurrences(of: "https://web-inbox-assets.suprsend.com/", with: "com.suprsend://")
+            UIApplication.shared.open(URL(string: deeplink)!)
+            return false
+        }
+        
+        return true
     }
 }
